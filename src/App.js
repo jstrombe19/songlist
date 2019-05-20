@@ -1,26 +1,37 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import SongList from './SongList.js';
+import AddSongForm from './AddSongForm.js';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends React.Component {
+
+  state = {
+    songs: [{
+      id: 1,
+      title: "Call Me Maybe"
+    }, {
+      id: 2,
+      title: "For Whom the Bell Tolls"
+    }]
+  }
+
+  addSong = song => {
+    const { songs } = this.state;
+    const newSong = {...song, id: Date.now()};
+    const songList = [...songs, newSong];
+    this.setState({
+      songs: songList
+    });
+  }
+
+  render() {
+    const { songs } = this.state;
+    return (
+      <div className="App">
+        <AddSongForm addSong={this.addSong} />
+        <SongList songs={songs} />
+      </div>
+    );
+  }
 }
 
 export default App;
